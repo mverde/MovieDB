@@ -30,5 +30,24 @@
 			  </div>
      	 	</div>
 		</nav>
+		<br>
+		<br>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-3"></div>
+				<div class="col-xs-6">
+					<form>
+						<div class="form-group">
+							<label for="searchBarInput">Search</label>
+							<div class="input-group">
+								<input type="text" class="form-control" id="searchBarInput" placeholder="Actor, Movie">
+								<div class="input-group-addon btn btn-primary">Submit</div>
+							</div>
+  						</div>
+					</form>
+				</div>
+				<div class="col-xs-3"></div>
+			</div>
+		</div>
 	</body>
 </html>
