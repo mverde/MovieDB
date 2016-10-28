@@ -24,8 +24,8 @@
 			      <ul class="nav navbar-nav">
 			        <li class="active"><a href="#">Search <span class="sr-only">(current)</span></a></li>
 			        <li><a href="#">Add</a></li>
-			        <li><a href="#">Actor A-Z</a></li>
-			        <li><a href="#">Movie A-Z</a></li>
+			        <li><a href="browseactor.php">Actor A-Z</a></li>
+			        <li><a href="browsemovie.php">Movie A-Z</a></li>
 			      </ul>
 			  </div>
      	 	</div>
