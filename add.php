@@ -5,7 +5,6 @@
 
 		<!-- Bootstrap core CSS -->
     	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    	<link href="css/index.css" rel="stylesheet">
 	</head>
 	<body>
 		<nav class="navbar navbar-inverse navbar-static-top">
@@ -23,10 +22,8 @@
         		<!-- Collect the nav links, forms, and other content for toggling -->
 			    <div class="collapse navbar-collapse">
 			      <ul class="nav navbar-nav">
-			        <li class="active"><a href="index.php">Search <span class="sr-only">(current)</span></a></li>
-			        <li><a href="#">Add</a></li>
-			        <li class="active"><a href="#">Search <span class="sr-only">(current)</span></a></li>
-			        <li><a href="add.php">Add</a></li>
+			        <li><a href="index.php">Search</a></li>
+			        <li class="active"><a href="#">Add <span class="sr-only">(current)</span></a></li>
 			      </ul>
 			  </div>
      	 	</div>
@@ -154,7 +151,7 @@
 						                foreach($movies as $tuple)
 						                {
 						                    echo "<tr>";
-						                  	echo "<td><a href='movieinfo.php?q=" . $tuple["id"] . "'>" . $tuple["title"] . "</a></td>";
+						                  	echo "<td>" . $tuple["title"] . "</td>";
 						              		echo "<td>" . $tuple["year"] . "</td>";
 						                    echo "</tr>";
 						                }
@@ -180,7 +177,7 @@
 						                foreach($actors as $tuple)
 						                {
 						                    echo "<tr>";
-						                  	echo "<td><a href='actorinfo.php?q=" . $tuple["id"] . "'>" . $tuple["first"] . " " . $tuple ["last"] . "</a></td>";
+						                  	echo "<td>" . $tuple["first"] . " " . $tuple ["last"] . "</td>";
 						              		echo "<td>" . $tuple["dob"] . "</td>";
 						              		echo "<td>" . (empty($tuple["dod"]) ? "N/A" : $tuple["dod"]) . "</td>";
 						                    echo "</tr>";
