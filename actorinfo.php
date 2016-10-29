@@ -23,10 +23,8 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse">
                   <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Search <span class="sr-only">(current)</span></a></li>
-                    <li><a href="#">Add</a></li>
-                    <li><a href="browseactor.php">Actor A-Z</a></li>
-                    <li><a href="browsemovie.php">Movie A-Z</a></li>
+                    <li class="active"><a href="index.php">Search <span class="sr-only">(current)</span></a></li>
+                    <li><a href="add.php">Add</a></li>
                   </ul>
               </div>
             </div>
@@ -34,13 +32,12 @@
 
         <?php
             $q = $_GET['q'];
-            $q = explode(" ", $q);
             $mysqli = new mysqli("localhost", "cs143", "", "CS143", 1438);
             if ($mysqli->connect_errno) {
                 echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
             }
 
-            $sql = "SELECT * FROM Actor WHERE first LIKE '$q[0]' AND last LIKE '$q[1]'";
+            $sql = "SELECT * FROM Actor WHERE id=$q";
             
             if ($result = $mysqli->query($sql)){
                 }

@@ -1,3 +1,7 @@
-li.films{
+li.films, li.comments{
 	list-style-type: none;
+}
+
+.hidden{
+	display: none;
 }
