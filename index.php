@@ -23,7 +23,7 @@
         		<!-- Collect the nav links, forms, and other content for toggling -->
 			    <div class="collapse navbar-collapse">
 			      <ul class="nav navbar-nav">
-			        <li class="active"><a href="#">Search <span class="sr-only">(current)</span></a></li>
+			        <li class="active"><a href="index.php">Search <span class="sr-only">(current)</span></a></li>
 			        <li><a href="#">Add</a></li>
 			      </ul>
 			  </div>
