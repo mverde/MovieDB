@@ -1,7 +1,19 @@
 $( document ).ready(function() {
+
     $('.alphabet').on("click", function(e) {
-	  e.preventDefault();
-	  
-	  $(this).toggleClass('nav-close');
+    	console.log("hi");
+    	$.ajax({
+		   type: "GET",
+		   url: "searchbyletter.php",
+		   data: 'A',
+		   success: function(){
+		     alert( "Data Saved:");
+		   }
+		 });
+    
+		$('.show-results').show();
+		return false;
+
 	});
+
 });
