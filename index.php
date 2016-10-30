@@ -5,7 +5,6 @@
 
 		<!-- Bootstrap core CSS -->
     	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    	<link href="css/index.css" rel="stylesheet">
 	</head>
 	<body>
 		<nav class="navbar navbar-inverse navbar-static-top">
@@ -23,7 +22,7 @@
         		<!-- Collect the nav links, forms, and other content for toggling -->
 			    <div class="collapse navbar-collapse">
 			      <ul class="nav navbar-nav">
-			        <li class="active"><a href="index.php">Search <span class="sr-only">(current)</span></a></li>
+			        <li class="active"><a href="#">Search <span class="sr-only">(current)</span></a></li>
 			        <li><a href="add.php">Add</a></li>
 			      </ul>
 			  </div>
@@ -43,7 +42,7 @@
 							<label for="searchBarInput">Search</label>
 							<div class="input-group">
 								<input type="text" class="form-control" id="searchBarInput" name="searchQuery" placeholder="Actors, Movie Titles, Keywords">
-								<div class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>
+								<div class="input-group-addon"></div>
 							</div>
   						</div>
 					</form>
@@ -67,7 +66,7 @@
 			} else {
 				if ($_SERVER["REQUEST_METHOD"] == "GET") {
 	    			// collect value of input field
-	    			$searchQuery = $_GET['searchQuery'];
+	    			$searchQuery = $mysqli->real_escape_string($_GET['searchQuery']);
 	    
 	    			if (!empty($searchQuery)) {
 	    				$keyWords = array();
