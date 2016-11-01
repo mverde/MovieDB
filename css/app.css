@@ -5,3 +5,59 @@ li.films, li.comments{
 .hidden{
 	display: none;
 }
+
+ul{
+	padding:0;
+}
+li.comments{
+	border: 1px solid #3F3F3F;
+	padding: 5px;
+	margin-bottom: 10px;
+	width: auto;
+	height: 200px;
+
+}
+
+.comment-section{
+	border-bottom: 1px solid #CDCDCD;
+	min-height: 50px;
+}
+.user-rating{
+	font-size: 1.5em;
+	font-weight: bold;
+	color: #3F3F3F;
+}
+
+.user-name{
+	font-size: 1.1em;
+	color: #3F3F3F;
+}
+
+.user-time{
+	color: #B5B5B5;
+}
+
+.user-comment{
+	padding: 10px;
+}
+
+.actors{
+	font-size: 1.2em;
+	font-weight: bold;
+	color: #ffb1a1;
+}
+
+.actors:hover{
+	text-decoration: none;
+	color:#ffcbc0;
+}
+
+.actor-info{
+	list-style-type: none;
+	font-size: .5em;
+	color: grey;
+}
+
+li.films{
+	padding-bottom: 5px;
+}

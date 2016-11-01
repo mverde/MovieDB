@@ -17,7 +17,7 @@
             			<span class="icon-bar"></span>
             			<span class="icon-bar"></span>
           			</button>
-          			<a class="navbar-brand" href="#">MovieDB</a>
+          			<a class="navbar-brand" href="index.php">MovieDB</a>
         		</div>
 
         		<!-- Collect the nav links, forms, and other content for toggling -->
@@ -59,13 +59,14 @@
         			<ul class="actor-in-movie">
         				<?php
         					
-        					$getActors = "SELECT first,last FROM Actor WHERE id IN(SELECT aid FROM MovieActor WHERE mid=$q)";
+        					$getActors = "SELECT first,last,id FROM Actor WHERE id IN(SELECT aid FROM MovieActor WHERE mid=$q) ORDER BY last;";
 
         					if ($result = $mysqli->query($getActors)){
 
 					            while($row = mysqli_fetch_array($result)) {
-					                echo "<li class='films'>" . $row['first'] . " " . $row['last'] . "</li>";
-					   
+					                ?>
+					                <li class='films'><a class="actors" href="actorinfo.php?q=<?php echo $row['id']; ?>"><?php echo $row['first'] . " " . $row['last']; ?> </a></li>
+					   				<?php
 					            }
 					          }
 			                else{
@@ -85,8 +86,21 @@
         					if ($result = $mysqli->query($getComments)){
 
 					            while($row = mysqli_fetch_array($result)) {
-					                echo "<li class='comments'>" . $row['name'] . $row['time'] . $row['comment'] . " " . $row['rating'] . "</li>";
-					   
+					            	?>
+					 
+					                <li class="comments">
+					                	<div class="comment-section">
+					                		<div class="user-name col-sm-3"><p><?php echo $row['name']; ?></p></div>
+					                		<div class="user-time col-sm-3"><p><?php echo $row['time']; ?><p></div>
+					                		<div class="user-rating col-sm-1 col-sm-offset-5"><p><?php echo $row['rating']; ?></p></div>
+					                		
+					                	</div>
+					                	<div class="user-comment col-sm-12">
+					                		<p><?php echo $row['comment']; ?></p>
+					                	</div>
+					                </li>
+
+					   				<?php
 					            }
 					          }
 			                else{
@@ -104,7 +118,7 @@
     				<form method="get" action="addcomment.php">
 					    <div class="form-group">
 					      <label for="name">Name</label>
-					      <input type="text" class="form-control" name="name" id="name" placeholder="Enter name">
+					      <input type="text" maxlength="20" class="form-control" name="name" id="name" placeholder="Enter name">
 					    </div>
 					    <div class="form-group">
 					      <label for="rating">Rating</label>
@@ -117,7 +131,7 @@
 					      </select>
 					    </div>
 					    <div class="form-group">
-		                  <textarea class="form-control" name="comment" rows="6"></textarea>
+		                  <textarea maxlength="500" class="form-control" name="comment" rows="6"></textarea>
 		                  </br> 
 		                </div>
 		                <div class="form-group hidden">
