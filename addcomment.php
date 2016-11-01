@@ -38,37 +38,37 @@
 					$mysqli = new mysqli("localhost", "cs143", "", "CS143", 1438);
 		            if ($mysqli->connect_errno) {
 		                echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
-		            }
-		         	
-		         	$name = (string)$_GET["name"];
+		            }else{
+
+
+		         	$name = (string)$_POST["name"];
 		         	$name = $mysqli->real_escape_string($name);
-		         	$comment = (string)$_GET["comment"];
+		         	$comment = (string)$_POST["comment"];
 		         	$comment = $mysqli->real_escape_string($comment);
-		         	$rating = (int)$_GET["rating"];
-		         	$movieid = (int)$_GET["movieid"];
+		         	$rating = (int)$_POST["rating"];
+		         	$movieid = (int)$_POST["movieid"];
 		         	$date = date('Y-m-d H:i:s');
 		         	
 		         	$addComment="INSERT INTO Review (name, time, mid, rating, comment) VALUES ('$name', '$date', '$movieid', '$rating', '$comment')";
 
         			if ($result = $mysqli->query($addComment)){
         				?>
-        				<h1>THANK YOU ~<?php echo $_GET["name"]; ?>~</h1>
+        				<h1>THANK YOU ~<?php echo $_POST["name"]; ?>~</h1>
 						</br>
-						<h1>WE VALUE UR COMMENT OF ~<?php echo $_GET["comment"]; ?>~</h1>
+						<h1>WE VALUE UR COMMENT OF ~<?php echo $_POST["comment"]; ?>~</h1>
 						</br>
-						<h1>ALSO THANK YOU FOR YOUR RATING OF ~<?php echo $_GET["rating"]; ?>~</h1>
+						<h1>ALSO THANK YOU FOR YOUR RATING OF ~<?php echo $_POST["rating"]; ?>~</h1>
 						</br>
 						<h1>THE TIME IS ~<?php echo date('Y-m-d H:i:s'); ?>~</h1>
 						</br>
-        				<h2><a href="movieinfo.php?q=<?php echo $_GET["movieid"]; ?>">CLICK HERE TO SEE YOUR COMMENT</a></h2>
+        				<h2><a href="movieinfo.php?q=<?php echo $_POST["movieid"]; ?>">CLICK HERE TO SEE YOUR COMMENT</a></h2>
 			            <?php
 			          }
 	                else{
 	                	?>
-	                	<h2><a href="movieinfo.php?q=<?php echo $_GET["movieid"]; ?>">SORRY YOU PROBABLY PUT AN APOSTROPHE IN YOUR COMMENT
-	                		AND WE DON'T USE THOSE ... please try again without them :)</a></h2>
+	                	<h2><a href="movieinfo.php?q=<?php echo $_POST["movieid"]; ?>">SORRY an error occured!</a></h2>
 	                	<?php
-	                   
+	                   }
 	                }
 				?>
 				</div>

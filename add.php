@@ -28,7 +28,13 @@
 			  </div>
      	 	</div>
 		</nav>
-
+		<!-- Connect to DB -->
+		<?php
+			$mysqli = new mysqli('localhost', 'cs143', '', 'CS143', 1438);
+			if ($mysqli->connect_errno) {
+    			echo "<font color='red'>Failed to connect to MySQL.</font>";
+			} 
+		?>
 		<div class="container">
 		    <ul class="nav nav-tabs" id="form-tabs">
 		        <li class="nav active"><a href="#actor-or-director" data-toggle="tab">Actor/Director</a></li>
@@ -132,8 +138,82 @@
   						</form>
 			        </div>
 			        <div class="tab-pane" id="actor-movie">
+			        	<form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
+							<div class="form-group">
+						      <label for="movietitle">Movie Title</label>
+						      <select name="movietitle" class="form-control" id="movietitle">
+						      	<?php
+						      		$getFilms = "SELECT id,title FROM Movie ORDER BY title";
+						      		if ($result = $mysqli->query($getFilms)){
+						      			while($row = mysqli_fetch_array($result)) {
+						      				?>
+						      				<option value="<?php echo $row['id']; ?>"><?php echo $row['title']; ?></option>
+						      				<?php
+						      			}
+						      		}
+
+						      	?>
+						      </select>
+						    </div>
+	  						<div class="form-group">
+								<label for="actor">Actor</label>
+								<select name="actor" class="form-control" id="actor">
+						      	<?php
+						      		$getActors = "SELECT id,first,last FROM Actor ORDER BY last";
+						      		if ($result = $mysqli->query($getActors)){
+						      			while($row = mysqli_fetch_array($result)) {
+						      				?>
+						      				<option value="<?php echo $row['id']; ?>"><?php echo $row['first'] . " " . $row['last']; ?></option>
+						      				<?php
+						      			}
+						      		}
+
+						      	?>
+						      </select>
+	  						</div>
+	  						<div class="form-group">
+								<label for="role">Role</label>
+								<input maxlength="50" type="text" class="form-control" id="role" name="role" placeholder="50 characters max">
+	  						</div>
+	  						<button name="actorMovieButton" type="submit" class="btn btn-default">Submit</button>
+						</form>
 			        </div>
 			        <div class="tab-pane" id="director-movie">
+			        	<form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
+							<div class="form-group">
+						      <label for="movietitle">Movie Title</label>
+						      <select name="movietitle" class="form-control" id="movietitle">
+						      	<?php
+						      		$getFilms = "SELECT id,title FROM Movie";
+						      		if ($result = $mysqli->query($getFilms)){
+						      			while($row = mysqli_fetch_array($result)) {
+						      				?>
+						      				<option value="<?php echo $row['id']; ?>"><?php echo $row['title']; ?></option>
+						      				<?php
+						      			}
+						      		}
+
+						      	?>
+						      </select>
+						    </div>
+	  						<div class="form-group">
+								<label for="director">Director</label>
+								<select name="director" class="form-control" id="director">
+						      	<?php
+						      		$getDirectors = "SELECT id,first,last FROM Director ORDER BY last";
+						      		if ($result = $mysqli->query($getDirectors)){
+						      			while($row = mysqli_fetch_array($result)) {
+						      				?>
+						      				<option value="<?php echo $row['id']; ?>"><?php echo $row['first'] . " " . $row['last']; ?></option>
+						      				<?php
+						      			}
+						      		}
+
+						      	?>
+						      </select>
+	  						</div>
+	  						<button name="actorDirectorButton" type="submit" class="btn btn-default">Submit</button>
+						</form>
 			        </div>
 			    </div>
 			    <span class="col-xs-3"></span>
@@ -165,10 +245,7 @@
 				return preg_match("/^(\S{1,20}\,)*(\S{1,20})$/", $genres);
 			}
 
-			$mysqli = new mysqli('localhost', 'cs143', '', 'CS143', 1438);
-			if ($mysqli->connect_errno) {
-    			echo "<font color='red'>Failed to connect to MySQL.</font>";
-			} else {
+			if (!$mysqli->connect_errno) {
 				if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					if (isset($_POST['actorFormButton'])) {
 						$firstName = $_POST['firstName'];
@@ -188,7 +265,6 @@
 							$dobFinal = $mysqli->real_escape_string($dob);
 							$dodFinal = (empty($dod) ? "NULL" : $mysqli->real_escape_string($dod));
 							$queryString = "INSERT INTO Actor (id, last, first, sex, dob, dod) VALUES (" . $nextPersonId . ", '" . $lastNameFinal . "', '" . $firstNameFinal . "', '" . $sexFinal . "', STR_TO_DATE('" . $dobFinal . "', '%Y-%m-%d'), STR_TO_DATE('" . $dodFinal . "', '%Y-%m-%d'));";
-							echo $queryString;
 							if ($mysqli->query($queryString)) {
 								if (!$mysqli->query("UPDATE MaxPersonID SET id=" . $nextPersonId . ";")) {
 									echo "<font color='red'>Person id update failed.</font>";
@@ -215,7 +291,6 @@
 							$dobFinal = $mysqli->real_escape_string($dob);
 							$dodFinal = (empty($dod) ? "NULL" : $mysqli->real_escape_string($dod));
 							$queryString = "INSERT INTO Director (id, last, first, dob, dod) VALUES (" . $nextPersonId . ", '" . $lastNameFinal . "', '" . $firstNameFinal . "', STR_TO_DATE('" . $dobFinal . "', '%Y-%m-%d'), STR_TO_DATE('" . $dodFinal . "', '%Y-%m-%d'));";
-							echo $queryString;
 							if ($mysqli->query($queryString)) {
 								if (!$mysqli->query("UPDATE MaxPersonID SET id=" . $nextPersonId . ";")) {
 									echo "<font color='red'>Person id update failed.</font>";
@@ -243,7 +318,6 @@
 							$ratingFinal = $mysqli->real_escape_string($rating);
 							$companyFinal = $mysqli->real_escape_string($company);
 							$queryString = "INSERT INTO Movie (id, title, year, rating, company) VALUES (" . $nextMovieId . ", '" . $titleFinal . "', " . $yearFinal . ", '" . $ratingFinal . "', '" . $companyFinal . "');";
-							echo $queryString;	
 							if ($mysqli->query($queryString)) {
 								if (!$mysqli->query("UPDATE MaxMovieID SET id=" . $nextMovieId . ";")) {
 									echo "<font color='red'>Person id update failed.</font>";
@@ -268,6 +342,37 @@
 						} else {
 							echo "<font color='red'>There was an error in your submission. Please follow all specified formats.</font>";
 						}
+					} else if(isset($_POST['actorMovieButton'])){
+						$mid = (int)$_POST["movietitle"];
+						$aid = (int)$_POST["actor"];
+						$role = $_POST["role"];
+
+
+						$addActorMovieRelation = "INSERT INTO MovieActor (mid,aid,role) VALUES ('$mid', '$aid', '$role')";
+						if ($result = $mysqli->query($addActorMovieRelation)){
+        				?>
+        				<h3><span class="highlight">Successfully added.</span></h3>
+			            <?php
+			          }
+	                else{
+	                	?>
+	                	<h3><span class="highlight">Problem adding to database.</span></h3>
+	                	<?php
+	                   }
+					}else if(isset($_POST['actorDirectorButton'])){
+						$mid = (int)$_POST["movietitle"];
+						$did = (int)$_POST["director"];
+						$addActorMovieRelation = "INSERT INTO MovieDirector (mid,did) VALUES ('$mid', '$did')";
+						if ($result = $mysqli->query($addActorMovieRelation)){
+        				?>
+        				<h3><span class="highlight">Successfully added.</span></h3>
+			            <?php
+			          }
+	                else{
+	                	?>
+	                	<h3><span class="highlight">Problem adding to database.</span></h3>
+	                	<?php
+	                   }
 					}
  				}
  			}

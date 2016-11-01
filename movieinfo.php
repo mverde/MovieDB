@@ -92,7 +92,7 @@
 					                	<div class="comment-section">
 					                		<div class="user-name col-sm-3"><p><?php echo $row['name']; ?></p></div>
 					                		<div class="user-time col-sm-3"><p><?php echo $row['time']; ?><p></div>
-					                		<div class="user-rating col-sm-1 col-sm-offset-5"><p><?php echo $row['rating']; ?></p></div>
+					                		<div class="user-rating col-sm-3 col-sm-offset-3"><p>rating: <?php echo $row['rating']; ?></p></div>
 					                		
 					                	</div>
 					                	<div class="user-comment col-sm-12">
@@ -115,7 +115,7 @@
     			<div class="col-md-12">
     				<h2><span class="highlight"> Add Comment</span> </h2>
 
-    				<form method="get" action="addcomment.php">
+    				<form method="post" action="addcomment.php">
 					    <div class="form-group">
 					      <label for="name">Name</label>
 					      <input type="text" maxlength="20" class="form-control" name="name" id="name" placeholder="Enter name">
