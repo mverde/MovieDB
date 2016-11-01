@@ -5,3 +5,85 @@ li.films, li.comments{
 .hidden{
 	display: none;
 }
+
+ul{
+	padding:0;
+}
+li.comments{
+	border: 1px solid #3F3F3F;
+	padding: 5px;
+	margin-bottom: 10px;
+	width: auto;
+	height: 200px;
+
+}
+
+.comment-section{
+	border-bottom: 1px solid #CDCDCD;
+	min-height: 50px;
+}
+.user-rating{
+	font-size: 1.5em;
+	font-weight: bold;
+	color: #3F3F3F;
+}
+
+.user-name{
+	font-size: 1.1em;
+	color: #3F3F3F;
+}
+
+.user-time{
+	color: #B5B5B5;
+}
+
+.user-comment{
+	padding: 10px;
+}
+
+.actors, a.nofilms{
+	font-size: 2em;
+    font-weight: bold;
+    color: #333333;
+}
+
+.nofilms:hover{
+	color: #333333;
+	text-decoration: none;
+}
+
+.actors:hover{
+	text-decoration: none;
+	color:rgba(255, 202, 71, 0.5);;
+}
+
+.actor-info{
+	list-style-type: none;
+    font-size: 2.8em;
+    font-weight: bold;
+    color: #333333;
+}
+
+li.films{
+	padding-bottom: 5px;
+}
+
+h2{
+	margin-bottom:20px !important;
+}
+h2 span.highlight{
+	padding-right: 50px;
+    border-bottom: 5px solid rgba(255, 214, 9, 0.6);
+	padding: 0px 10px 0px 0px;
+    font-size: 2.3em;
+}
+h1 span.highlight{
+	background: rgba(255, 202, 71, 0.5);
+	padding: 0px 10px 0px 0px;
+    font-size: 3em;
+}
+
+.sex{
+	color: rgba(255, 202, 71, 0.7);;
+    font-size: 3em;
+}
