@@ -23,7 +23,7 @@
 			    <div class="collapse navbar-collapse">
 			      <ul class="nav navbar-nav">
 			        <li class="active"><a href="index.php">Search <span class="sr-only">(current)</span></a></li>
-			        <li><a href="add.php">Add</a></li>
+			        <li><a href="add.php#">Add</a></li>
 			      </ul>
 			  </div>
      	 	</div>

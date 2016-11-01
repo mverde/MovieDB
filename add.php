@@ -30,7 +30,7 @@
 		</nav>
 
 		<div class="container">
-		    <ul class="nav nav-tabs">
+		    <ul class="nav nav-tabs" id="form-tabs">
 		        <li class="nav active"><a href="#actor-or-director" data-toggle="tab">Actor/Director</a></li>
 		        <li class="nav"><a href="#movie" data-toggle="tab">Movie</a></li>
 		        <li class="nav"><a href="#actor-movie" data-toggle="tab">Actor to Movie</a></li>
@@ -46,14 +46,14 @@
 			        <div class="tab-pane active" id="actor-or-director">
 			        	<ul class="nav nav-tabs">
 					        <li class="nav active"><a href="#Actor" data-toggle="tab">Actor</a></li>
-					        <li class="nav"><a href="#Director" data-toggle="tab">Director</a></li>
+					        <li class="nav"><a href="#Director" data-toggle="tab" id="director-link">Director</a></li>
 					    </ul>
 
 					    <br>
 
 					    <div class="tab-content">
 					    	<div class="tab-pane active" id="Actor">
-							    <form method="get" action="<?php echo $_SERVER['PHP_SELF'];?>">
+							    <form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
 									<div class="form-group">
 										<label for="firstName">First Name</label>
 										<input maxlength="20" type="text" class="form-control" id="firstName" name="firstName" placeholder="up to 20 characters">
@@ -78,7 +78,7 @@
 								</form>
 					    	</div>
 					    	<div class="tab-pane" id="Director">
-							    <form method="get" action="<?php echo $_SERVER['PHP_SELF'];?>">
+							    <form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
 									<div class="form-group">
 										<label for="firstName">First Name</label>
 										<input maxlength="20" type="text" class="form-control" id="firstName" name="firstName" placeholder="up to 20 characters">
@@ -89,11 +89,11 @@
 			  						</div>
 			  						<div class="form-group">
 										<label for="dob">DOB</label>
-										<input maxlength="20" type="text" class="form-control" id="dob" name="dob" placeholder="yyyy-mm-dd">
+										<input maxlength="10" type="text" class="form-control" id="dob" name="dob" placeholder="yyyy-mm-dd">
 			  						</div>
 			  						<div class="form-group">
 										<label for="dod">DOD</label>
-										<input maxlength="20" type="text" class="form-control" id="dod" name="dod" placeholder="yyyy-mm-dd, leave blank if still alive">
+										<input maxlength="10" type="text" class="form-control" id="dod" name="dod" placeholder="yyyy-mm-dd, leave blank if still alive">
 			  						</div>
 			  						<button name="directorFormButton" type="submit" class="btn btn-default">Submit</button>
 								</form>
@@ -101,7 +101,7 @@
 					    </div>
 			        </div>
 			        <div class="tab-pane" id="movie">
-			        	<form method="get" action="<?php echo $_SERVER['PHP_SELF'];?>">
+			        	<form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
 	        				<div class="form-group">
 								<label for="title">Title</label>
 								<input maxlength="100" type="text" class="form-control" id="title" name="title" placeholder="up to 100 characters">
@@ -142,6 +142,7 @@
 
 		<script src="js/jquery.js"></script>
 		<script src="bootstrap/js/bootstrap.min.js"></script>
+		<script src="js/add.js"></script>
 
 		<?php
 			function valid_word($word) {
@@ -151,26 +152,30 @@
 				return preg_match("/^.+$/", $phrase);
 			}
 			function valid_date($date) {
-				return preg_match("/^\d\d\d\d-\d\d-\d\d$/", $date);
+				if(preg_match("/^\d\d\d\d-\d\d-\d\d$/", $date)) {
+					$tempDate = explode('-', $date);
+					return checkdate($tempDate[1], $tempDate[2], $tempDate[0]);
+				}
+				return false;
 			}
 			function valid_year($year) {
 				return preg_match("/^\d\d\d\d$/", $year);
 			}
 			function valid_genres($genres) {
-				return preg_match("/^(\S{1,20}\,\s?)*(\S{1,20})$/", $genres);
+				return preg_match("/^(\S{1,20}\,)*(\S{1,20})$/", $genres);
 			}
 
 			$mysqli = new mysqli('localhost', 'cs143', '', 'CS143', 1438);
 			if ($mysqli->connect_errno) {
     			echo "<font color='red'>Failed to connect to MySQL.</font>";
 			} else {
-				if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-					if (isset($_GET['actorFormButton'])) {
-						$firstName = $_GET['firstName'];
-						$lastName = $_GET['lastName'];
-						$sex = $_GET['sex'];
-						$dob = $_GET['dob'];
-						$dod = $_GET['dod'];
+				if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+					if (isset($_POST['actorFormButton'])) {
+						$firstName = $_POST['firstName'];
+						$lastName = $_POST['lastName'];
+						$sex = $_POST['sex'];
+						$dob = $_POST['dob'];
+						$dod = $_POST['dod'];
 
 						if (valid_word($firstName) && valid_word($lastName) && valid_word($sex) && valid_date($dob) && (empty($dod) || valid_date($dod))) {
 							$idResult = $mysqli->query("SELECT * FROM MaxPersonID;");
@@ -183,7 +188,7 @@
 							$dobFinal = $mysqli->real_escape_string($dob);
 							$dodFinal = (empty($dod) ? "NULL" : $mysqli->real_escape_string($dod));
 							$queryString = "INSERT INTO Actor (id, last, first, sex, dob, dod) VALUES (" . $nextPersonId . ", '" . $lastNameFinal . "', '" . $firstNameFinal . "', '" . $sexFinal . "', STR_TO_DATE('" . $dobFinal . "', '%Y-%m-%d'), STR_TO_DATE('" . $dodFinal . "', '%Y-%m-%d'));";
-							echo $queryString;	
+							echo $queryString;
 							if ($mysqli->query($queryString)) {
 								if (!$mysqli->query("UPDATE MaxPersonID SET id=" . $nextPersonId . ";")) {
 									echo "<font color='red'>Person id update failed.</font>";
@@ -194,13 +199,13 @@
 						} else {
 							echo "<font color='red'>There was an error in your submission. Please follow all specified formats.</font>";
 						}
-					} else if (isset($_GET['directorFormButton'])) {
-						$firstName = $_GET['firstName'];
-						$lastName = $_GET['lastName'];
-						$dob = $_GET['dob'];
-						$dod = $_GET['dod'];
+					} else if (isset($_POST['directorFormButton'])) {
+						$firstName = $_POST['firstName'];
+						$lastName = $_POST['lastName'];
+						$dob = $_POST['dob'];
+						$dod = $_POST['dod'];
 
-						if (valid_word($firstName) && valid_word($lastName) && valid_word($dob) && (empty($dod) || valid_date($dod))) {
+						if (valid_word($firstName) && valid_word($lastName) && valid_date($dob) && (empty($dod) || valid_date($dod))) {
 							$idResult = $mysqli->query("SELECT * FROM MaxPersonID;");
 							$idTuple = $idResult->fetch_assoc();
 
@@ -210,7 +215,7 @@
 							$dobFinal = $mysqli->real_escape_string($dob);
 							$dodFinal = (empty($dod) ? "NULL" : $mysqli->real_escape_string($dod));
 							$queryString = "INSERT INTO Director (id, last, first, dob, dod) VALUES (" . $nextPersonId . ", '" . $lastNameFinal . "', '" . $firstNameFinal . "', STR_TO_DATE('" . $dobFinal . "', '%Y-%m-%d'), STR_TO_DATE('" . $dodFinal . "', '%Y-%m-%d'));";
-							echo $queryString;	
+							echo $queryString;
 							if ($mysqli->query($queryString)) {
 								if (!$mysqli->query("UPDATE MaxPersonID SET id=" . $nextPersonId . ";")) {
 									echo "<font color='red'>Person id update failed.</font>";
@@ -219,34 +224,47 @@
 								echo "<font color='red'>Tuple insertion failed.</font>";
 							}
 						} else {
-							echo "<font color='red'>There was an error in your submission. Please follow all specified formats.</font>";
+							echo "<font class='row' color='red'>There was an error in your submission. Please follow all specified formats.</font>";
 						}
-					} else if (isset($_GET['movieFormButton'])) {
-						$title = $_GET['title'];
-						$year = $_GET['year'];
-						$rating = $_GET['rating'];
-						$company = $_GET['company'];
-						$genres = $_GET['genres'];
+					} else if (isset($_POST['movieFormButton'])) {
+						$title = $_POST['title'];
+						$year = $_POST['year'];
+						$rating = $_POST['rating'];
+						$company = $_POST['company'];
+						$genres = $_POST['genres'];
 
 						if (valid_phrase($title) && valid_year($year) && valid_phrase($company) && (empty($genres) || valid_genres($genres))) {
-							/*$idResult = $mysqli->query("SELECT * FROM MaxMovieID;");
+							$idResult = $mysqli->query("SELECT * FROM MaxMovieID;");
 							$idTuple = $idResult->fetch_assoc();
 
 							$nextMovieId = ((int) $idTuple['id']) + 1;
 							$titleFinal = $mysqli->real_escape_string($title);
-							$lastNameFinal = $mysqli->real_escape_string($lastName);
-							$sexFinal = $mysqli->real_escape_string($sex);
-							$dobFinal = $mysqli->real_escape_string($dob);
-							$dodFinal = (empty($dod) ? "NULL" : $mysqli->real_escape_string($dod));
-							$queryString = "INSERT INTO Actor (id, last, first, sex, dob, dod) VALUES (" . $nextMovieId . ", '" . $lastNameFinal . "', '" . $firstNameFinal . "', '" . $sexFinal . "', STR_TO_DATE('" . $dobFinal . "', '%Y-%m-%d'), STR_TO_DATE('" . $dodFinal . "', '%Y-%m-%d'));";
+							$yearFinal = $mysqli->real_escape_string($year);
+							$ratingFinal = $mysqli->real_escape_string($rating);
+							$companyFinal = $mysqli->real_escape_string($company);
+							$queryString = "INSERT INTO Movie (id, title, year, rating, company) VALUES (" . $nextMovieId . ", '" . $titleFinal . "', " . $yearFinal . ", '" . $ratingFinal . "', '" . $companyFinal . "');";
 							echo $queryString;	
 							if ($mysqli->query($queryString)) {
-								if (!$mysqli->query("UPDATE MaxPersonID SET id=" . $nextMovieId . ";")) {
+								if (!$mysqli->query("UPDATE MaxMovieID SET id=" . $nextMovieId . ";")) {
 									echo "<font color='red'>Person id update failed.</font>";
 								}
 							} else {
 								echo "<font color='red'>Tuple insertion failed.</font>";
-							}*/
+							}
+
+							if (!empty($genres)) {
+								$insertString = "INSERT INTO MovieGenre	(mid, genre) VALUES";
+								$genre = strtok($genres, ',');
+								$insertString .= " (" . $nextMovieId . ", '" . $mysqli->real_escape_string($genre) . "')";
+			    				while (($genre = strtok(',')) !== false) {
+		     						$insertString .= ", (" . $nextMovieId . ", '" . $mysqli->real_escape_string($genre) . "')";
+		 						}
+		 						$insertString .= ";";
+							}
+							echo $insertString;
+							if (!$mysqli->query($insertString)) {
+								echo "<font color='red'>Genre insertion failed.</font>";
+							}
 						} else {
 							echo "<font color='red'>There was an error in your submission. Please follow all specified formats.</font>";
 						}
