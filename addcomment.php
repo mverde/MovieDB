@@ -38,8 +38,9 @@
 					$mysqli = new mysqli("localhost", "cs143", "", "CS143", 1438);
 		            if ($mysqli->connect_errno) {
 		                echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
-		            }
-		         	
+		            }else{
+
+
 		         	$name = (string)$_GET["name"];
 		         	$name = $mysqli->real_escape_string($name);
 		         	$comment = (string)$_GET["comment"];
@@ -68,7 +69,7 @@
 	                	<h2><a href="movieinfo.php?q=<?php echo $_GET["movieid"]; ?>">SORRY YOU PROBABLY PUT AN APOSTROPHE IN YOUR COMMENT
 	                		AND WE DON'T USE THOSE ... please try again without them :)</a></h2>
 	                	<?php
-	                   
+	                   }
 	                }
 				?>
 				</div>

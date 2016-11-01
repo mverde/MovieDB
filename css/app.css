@@ -1,5 +1,12 @@
-li.films, li.comments{
+li.films, li.comments, li.role{
 	list-style-type: none;
+}
+
+li.role{
+	font-size: 1.5em;
+	padding-left: 3%;
+    font-weight: bold;
+    color: #333333;
 }
 
 .hidden{
@@ -86,4 +93,9 @@ h1 span.highlight{
 .sex{
 	color: rgba(255, 202, 71, 0.7);;
     font-size: 3em;
+}
+
+h3{
+	padding-bottom: 50px;
+	padding-top: 50px;
 }

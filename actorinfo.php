@@ -87,8 +87,18 @@
                                     <li class="films">
                                         <a class="actors" href="movieinfo.php?q=<?php echo $row['id']; ?>"> <?php echo $row['title'];?></a>
                                     </li>
-
-                                    <?php
+                                    <li class="role">
+                                        <?php
+                                        $getRole = "SELECT role FROM MovieActor WHERE aid = $q AND mid =" . $row['id'] . "";
+                                        if ($result2 = $mysqli->query($getRole)){
+                                            while($row2 = mysqli_fetch_array($result2)) {
+                                            ?>
+                                            <li class="role">
+                                            Role: <?php echo $row2['role']; ?>
+                                            </li>
+                                            <?php
+                                            }
+                                        }
                                 }
 
                                 if ($row_count<=0){
