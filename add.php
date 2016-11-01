@@ -335,7 +335,6 @@
 		 						}
 		 						$insertString .= ";";
 							}
-							echo $insertString;
 							if (!$mysqli->query($insertString)) {
 								echo "<font color='red'>Genre insertion failed.</font>";
 							}
@@ -349,30 +348,21 @@
 
 
 						$addActorMovieRelation = "INSERT INTO MovieActor (mid,aid,role) VALUES ('$mid', '$aid', '$role')";
-						if ($result = $mysqli->query($addActorMovieRelation)){
-        				?>
-        				<h3><span class="highlight">Successfully added.</span></h3>
-			            <?php
+						if (!($result = $mysqli->query($addActorMovieRelation))){
+							?>
+		                	<h3><span class="highlight">Problem adding to database.</span></h3>
+		                	<?php
 			          }
-	                else{
-	                	?>
-	                	<h3><span class="highlight">Problem adding to database.</span></h3>
-	                	<?php
-	                   }
+
 					}else if(isset($_POST['actorDirectorButton'])){
 						$mid = (int)$_POST["movietitle"];
 						$did = (int)$_POST["director"];
 						$addActorMovieRelation = "INSERT INTO MovieDirector (mid,did) VALUES ('$mid', '$did')";
-						if ($result = $mysqli->query($addActorMovieRelation)){
-        				?>
-        				<h3><span class="highlight">Successfully added.</span></h3>
-			            <?php
+						if (!($result = $mysqli->query($addActorMovieRelation))){
+							?>
+		                	<h3><span class="highlight">Problem adding to database.</span></h3>
+		                	<?php
 			          }
-	                else{
-	                	?>
-	                	<h3><span class="highlight">Problem adding to database.</span></h3>
-	                	<?php
-	                   }
 					}
  				}
  			}
