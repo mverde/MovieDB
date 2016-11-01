@@ -173,9 +173,26 @@
 						$dod = $_GET['dod'];
 
 						if (valid_word($firstName) && valid_word($lastName) && valid_word($sex) && valid_date($dob) && (empty($dod) || valid_date($dod))) {
-							echo "u did it";
+							$idResult = $mysqli->query("SELECT * FROM MaxPersonID;");
+							$idTuple = $idResult->fetch_assoc();
+
+							$nextPersonId = ((int) $idTuple['id']) + 1;
+							$firstNameFinal = $mysqli->real_escape_string($firstName);
+							$lastNameFinal = $mysqli->real_escape_string($lastName);
+							$sexFinal = $mysqli->real_escape_string($sex);
+							$dobFinal = $mysqli->real_escape_string($dob);
+							$dodFinal = (empty($dod) ? "NULL" : $mysqli->real_escape_string($dod));
+							$queryString = "INSERT INTO Actor (id, last, first, sex, dob, dod) VALUES (" . $nextPersonId . ", '" . $lastNameFinal . "', '" . $firstNameFinal . "', '" . $sexFinal . "', STR_TO_DATE('" . $dobFinal . "', '%Y-%m-%d'), STR_TO_DATE('" . $dodFinal . "', '%Y-%m-%d'));";
+							echo $queryString;	
+							if ($mysqli->query($queryString)) {
+								if (!$mysqli->query("UPDATE MaxPersonID SET id=" . $nextPersonId . ";")) {
+									echo "<font color='red'>Person id update failed.</font>";
+								}
+							} else {
+								echo "<font color='red'>Tuple insertion failed.</font>";
+							}
 						} else {
-							echo "wrong";
+							echo "<font color='red'>There was an error in your submission. Please follow all specified formats.</font>";
 						}
 					} else if (isset($_GET['directorFormButton'])) {
 						$firstName = $_GET['firstName'];
@@ -184,9 +201,25 @@
 						$dod = $_GET['dod'];
 
 						if (valid_word($firstName) && valid_word($lastName) && valid_word($dob) && (empty($dod) || valid_date($dod))) {
-							echo "u did it";
+							$idResult = $mysqli->query("SELECT * FROM MaxPersonID;");
+							$idTuple = $idResult->fetch_assoc();
+
+							$nextPersonId = ((int) $idTuple['id']) + 1;
+							$firstNameFinal = $mysqli->real_escape_string($firstName);
+							$lastNameFinal = $mysqli->real_escape_string($lastName);
+							$dobFinal = $mysqli->real_escape_string($dob);
+							$dodFinal = (empty($dod) ? "NULL" : $mysqli->real_escape_string($dod));
+							$queryString = "INSERT INTO Director (id, last, first, dob, dod) VALUES (" . $nextPersonId . ", '" . $lastNameFinal . "', '" . $firstNameFinal . "', STR_TO_DATE('" . $dobFinal . "', '%Y-%m-%d'), STR_TO_DATE('" . $dodFinal . "', '%Y-%m-%d'));";
+							echo $queryString;	
+							if ($mysqli->query($queryString)) {
+								if (!$mysqli->query("UPDATE MaxPersonID SET id=" . $nextPersonId . ";")) {
+									echo "<font color='red'>Person id update failed.</font>";
+								}
+							} else {
+								echo "<font color='red'>Tuple insertion failed.</font>";
+							}
 						} else {
-							echo "wrong";
+							echo "<font color='red'>There was an error in your submission. Please follow all specified formats.</font>";
 						}
 					} else if (isset($_GET['movieFormButton'])) {
 						$title = $_GET['title'];
@@ -196,9 +229,26 @@
 						$genres = $_GET['genres'];
 
 						if (valid_phrase($title) && valid_year($year) && valid_phrase($company) && (empty($genres) || valid_genres($genres))) {
-							echo "u did it";
+							/*$idResult = $mysqli->query("SELECT * FROM MaxMovieID;");
+							$idTuple = $idResult->fetch_assoc();
+
+							$nextMovieId = ((int) $idTuple['id']) + 1;
+							$titleFinal = $mysqli->real_escape_string($title);
+							$lastNameFinal = $mysqli->real_escape_string($lastName);
+							$sexFinal = $mysqli->real_escape_string($sex);
+							$dobFinal = $mysqli->real_escape_string($dob);
+							$dodFinal = (empty($dod) ? "NULL" : $mysqli->real_escape_string($dod));
+							$queryString = "INSERT INTO Actor (id, last, first, sex, dob, dod) VALUES (" . $nextMovieId . ", '" . $lastNameFinal . "', '" . $firstNameFinal . "', '" . $sexFinal . "', STR_TO_DATE('" . $dobFinal . "', '%Y-%m-%d'), STR_TO_DATE('" . $dodFinal . "', '%Y-%m-%d'));";
+							echo $queryString;	
+							if ($mysqli->query($queryString)) {
+								if (!$mysqli->query("UPDATE MaxPersonID SET id=" . $nextMovieId . ";")) {
+									echo "<font color='red'>Person id update failed.</font>";
+								}
+							} else {
+								echo "<font color='red'>Tuple insertion failed.</font>";
+							}*/
 						} else {
-							echo "wrong";
+							echo "<font color='red'>There was an error in your submission. Please follow all specified formats.</font>";
 						}
 					}
  				}
