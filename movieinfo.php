@@ -115,7 +115,7 @@
     			<div class="col-md-12">
     				<h2><span class="highlight"> Add Comment</span> </h2>
 
-    				<form method="get" action="addcomment.php">
+    				<form method="post" action="addcomment.php">
 					    <div class="form-group">
 					      <label for="name">Name</label>
 					      <input type="text" maxlength="20" class="form-control" name="name" id="name" placeholder="Enter name">
