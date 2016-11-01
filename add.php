@@ -5,6 +5,7 @@
 
 		<!-- Bootstrap core CSS -->
     	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    	<link href="css/add.css" rel="stylesheet">
 	</head>
 	<body>
 		<nav class="navbar navbar-inverse navbar-static-top">
@@ -19,7 +20,6 @@
           			<a class="navbar-brand" href="#">MovieDB</a>
         		</div>
 
-        		<!-- Collect the nav links, forms, and other content for toggling -->
 			    <div class="collapse navbar-collapse">
 			      <ul class="nav navbar-nav">
 			        <li><a href="index.php">Search</a></li>
@@ -29,173 +29,180 @@
      	 	</div>
 		</nav>
 
-		<br>
-		<br>
-		<br>
+		<div class="container">
+		    <ul class="nav nav-tabs">
+		        <li class="nav active"><a href="#actor-or-director" data-toggle="tab">Actor/Director</a></li>
+		        <li class="nav"><a href="#movie" data-toggle="tab">Movie</a></li>
+		        <li class="nav"><a href="#actor-movie" data-toggle="tab">Actor to Movie</a></li>
+		       	<li class="nav"><a href="#director-movie" data-toggle="tab">Director to Movie</a></li>
+		    </ul>
 
-		<div class="container-fluid">
-			<div class="row">
-				<span class="col-xs-3"></span>
-				<div class="col-xs-6">
-					<form method="get" action="<?php echo $_SERVER['PHP_SELF'];?>">
-						<div class="form-group">
-							<label for="searchBarInput">Search</label>
-							<div class="input-group">
-								<input type="text" class="form-control" id="searchBarInput" name="searchQuery" placeholder="Actors, Movie Titles, Keywords">
-								<div class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>
-							</div>
-  						</div>
-					</form>
-				</div>
-				<span class="col-xs-3"></span>
+		    <br>
+		    <br>
+
+		    <!-- Tab panes -->
+		    <div class="row">
+			    <div class="tab-content col-xs-9">
+			        <div class="tab-pane active" id="actor-or-director">
+			        	<ul class="nav nav-tabs">
+					        <li class="nav active"><a href="#Actor" data-toggle="tab">Actor</a></li>
+					        <li class="nav"><a href="#Director" data-toggle="tab">Director</a></li>
+					    </ul>
+
+					    <br>
+
+					    <div class="tab-content">
+					    	<div class="tab-pane active" id="Actor">
+							    <form method="get" action="<?php echo $_SERVER['PHP_SELF'];?>">
+									<div class="form-group">
+										<label for="firstName">First Name</label>
+										<input maxlength="20" type="text" class="form-control" id="firstName" name="firstName" placeholder="up to 20 characters">
+			  						</div>
+			  						<div class="form-group">
+										<label for="lastName">Last Name</label>
+										<input maxlength="20" type="text" class="form-control" id="lastName" name="lastName" placeholder="up to 20 characters">
+			  						</div>
+			  						<div class="form-group">
+										<label for="sex">Sex</label>
+										<input maxlength="6" type="text" class="form-control" id="sex" name="sex" placeholder="up to 6 characters">
+			  						</div>
+			  						<div class="form-group">
+										<label for="dob">DOB</label>
+										<input maxlength="10" type="text" class="form-control" id="dob" name="dob" placeholder="yyyy-mm-dd">
+			  						</div>
+			  						<div class="form-group">
+										<label for="dod">DOD</label>
+										<input maxlength="10" type="text" class="form-control" id="dod" name="dod" placeholder="yyyy-mm-dd, leave blank if still alive">
+			  						</div>
+			  						<button name="actorFormButton" type="submit" class="btn btn-default">Submit</button>
+								</form>
+					    	</div>
+					    	<div class="tab-pane" id="Director">
+							    <form method="get" action="<?php echo $_SERVER['PHP_SELF'];?>">
+									<div class="form-group">
+										<label for="firstName">First Name</label>
+										<input maxlength="20" type="text" class="form-control" id="firstName" name="firstName" placeholder="up to 20 characters">
+			  						</div>
+			  						<div class="form-group">
+										<label for="lastName">Last Name</label>
+										<input maxlength="20" type="text" class="form-control" id="lastName" name="lastName" placeholder="up to 20 characters">
+			  						</div>
+			  						<div class="form-group">
+										<label for="dob">DOB</label>
+										<input maxlength="20" type="text" class="form-control" id="dob" name="dob" placeholder="yyyy-mm-dd">
+			  						</div>
+			  						<div class="form-group">
+										<label for="dod">DOD</label>
+										<input maxlength="20" type="text" class="form-control" id="dod" name="dod" placeholder="yyyy-mm-dd, leave blank if still alive">
+			  						</div>
+			  						<button name="directorFormButton" type="submit" class="btn btn-default">Submit</button>
+								</form>
+					    	</div>
+					    </div>
+			        </div>
+			        <div class="tab-pane" id="movie">
+			        	<form method="get" action="<?php echo $_SERVER['PHP_SELF'];?>">
+	        				<div class="form-group">
+								<label for="title">Title</label>
+								<input maxlength="100" type="text" class="form-control" id="title" name="title" placeholder="up to 100 characters">
+	  						</div>
+	  						<div class="form-group">
+								<label for="year">Year</label>
+								<input maxlength="4" type="text" class="form-control" id="year" name="year" placeholder="yyyy">
+	  						</div>
+	  						<div class="form-group">
+								<label for="rating">Rating</label>
+								<select name="rating" class="form-control">
+									<option value="g">G</option>
+								  	<option value="pg">PG</option>
+								  	<option value="pg13">PG-13</option>
+								  	<option value="r">R</option>
+								  	<option value="nc17">NC-17</option>
+								</select>
+	  						</div>
+	  						<div class="form-group">
+								<label for="company">Production Company</label>
+								<input maxlength="50" type="text" class="form-control" id="company" name="company" placeholder="up to 50 characters">
+	  						</div>
+	  						 <div class="form-group">
+								<label for="genres">Genres</label>
+								<input type="text" class="form-control" id="genres" name="genres" placeholder="comma-separated, up to 20 characters each, leave blank if unknown">
+	  						</div>
+	  						<button name="movieFormButton" type="submit" class="btn btn-default">Submit</button>
+  						</form>
+			        </div>
+			        <div class="tab-pane" id="actor-movie">
+			        </div>
+			        <div class="tab-pane" id="director-movie">
+			        </div>
+			    </div>
+			    <span class="col-xs-3"></span>
 			</div>
 		</div>
 
-		<div class="container">
-			<?php
-			function movie_sort($a, $b) {
-				return strcasecmp($a["title"], $b["title"]);
+		<script src="js/jquery.js"></script>
+		<script src="bootstrap/js/bootstrap.min.js"></script>
+
+		<?php
+			function valid_word($word) {
+				return preg_match("/^\S+$/", $word);
 			}
-			function actor_sort($a, $b) {
-				return strcasecmp($a["first"], $b["first"]);
+			function valid_phrase($phrase) {
+				return preg_match("/^.+$/", $phrase);
+			}
+			function valid_date($date) {
+				return preg_match("/^\d\d\d\d-\d\d-\d\d$/", $date);
+			}
+			function valid_year($year) {
+				return preg_match("/^\d\d\d\d$/", $year);
+			}
+			function valid_genres($genres) {
+				return preg_match("/^(\S{1,20}\,\s?)*(\S{1,20})$/", $genres);
 			}
 
-			$mysqli = new mysqli("localhost", "cs143", "", "CS143", 1438);
+			$mysqli = new mysqli('localhost', 'cs143', '', 'CS143', 1438);
 			if ($mysqli->connect_errno) {
     			echo "<font color='red'>Failed to connect to MySQL.</font>";
 			} else {
-				if ($_SERVER["REQUEST_METHOD"] == "GET") {
-	    			// collect value of input field
-	    			$searchQuery = $_GET['searchQuery'];
-	    
-	    			if (!empty($searchQuery)) {
-	    				$keyWords = array();
-	    				$word = strtok($searchQuery, ' ');
-	    				while ( $word !== false ) {
-     						$keyWords[] = $word;
-     						$word = strtok(' ');
- 						}
+				if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+					if (isset($_GET['actorFormButton'])) {
+						$firstName = $_GET['firstName'];
+						$lastName = $_GET['lastName'];
+						$sex = $_GET['sex'];
+						$dob = $_GET['dob'];
+						$dod = $_GET['dod'];
 
-	    				$movieSqlQuery = "SELECT * FROM Movie WHERE";
-	    				$i = 0;
-	    				foreach($keyWords as $keyWord)
-			            {
-			            	if ($i == 0) {
-			            		$movieSqlQuery .= " title LIKE '%" . $keyWord . "%'";
-			            		$i++;
-			            	} else {
-			            		$movieSqlQuery .= " AND title LIKE '%" . $keyWord . "%'";
-			            	}
-			            }
-			            $movieSqlQuery = $movieSqlQuery . ";";
-			            //echo $movieSqlQuery;
+						if (valid_word($firstName) && valid_word($lastName) && valid_word($sex) && valid_date($dob) && (empty($dod) || valid_date($dod))) {
+							echo "u did it";
+						} else {
+							echo "wrong";
+						}
+					} else if (isset($_GET['directorFormButton'])) {
+						$firstName = $_GET['firstName'];
+						$lastName = $_GET['lastName'];
+						$dob = $_GET['dob'];
+						$dod = $_GET['dod'];
 
-	    				$actorSqlQuery = "SELECT * FROM Actor WHERE";
-	    				if (count($keyWords) === 1) {
-	    					$actorSqlQuery .= " (first LIKE '%" . $keyWords[0] . "%') OR (last LIKE '%" . $keyWords[0] . "%');";
-	    				} else if (count($keyWords) > 1) {
-	    					$i = 0;
-		    				foreach($keyWords as $keyWord)
-				            {
-				            	if ($i === 0) {
-				            		$actorSqlQuery .= " (first LIKE '%" . $keyWord . "%'";
-				            		$i += 1;
-				            	} else {
-				            		$actorSqlQuery .= " OR first LIKE '%" . $keyWord . "%'";
-				            	}
+						if (valid_word($firstName) && valid_word($lastName) && valid_word($dob) && (empty($dod) || valid_date($dod))) {
+							echo "u did it";
+						} else {
+							echo "wrong";
+						}
+					} else if (isset($_GET['movieFormButton'])) {
+						$title = $_GET['title'];
+						$year = $_GET['year'];
+						$rating = $_GET['rating'];
+						$company = $_GET['company'];
+						$genres = $_GET['genres'];
 
-				            }
-				            $actorSqlQuery .= ") AND";
-
-				            $i = 0;
-		    				foreach($keyWords as $keyWord)
-				            {
-				            	if ($i === 0) {
-				            		$actorSqlQuery .= " (last LIKE '%" . $keyWord . "%'";
-				            		$i += 1;
-				            	} else {
-				            		$actorSqlQuery .= " OR last LIKE '%" . $keyWord . "%'";
-				            	}
-
-				            }
-				            $actorSqlQuery .= ");";
-	    				}
-	    				//echo $actorSqlQuery;
-
-	    				$movieResult = $mysqli->query($movieSqlQuery);
-        				$movies = array();
-        				while($tuple = $movieResult->fetch_assoc())
-        				{
-            				$movies[] = $tuple;
-        				}
-        				usort($movies, "movie_sort");
-
-        				$actorResult = $mysqli->query($actorSqlQuery);
-        				$actors = array();
-        				while($tuple = $actorResult->fetch_assoc()) {
-        					$actors[] = $tuple;
-        				}
-        				usort($actors, "actor_sort");
-
-        				if (count($movies) > 0) {
-	        				?>
-	        				<h3>Movies</h3>
-	        				<div class="row">
-	        					<span class="col-xs-2"></span>
-		        				<table class="col-xs-8 table table-condensed table-hover">
-						            <tr class="no-hover">
-						            	<th>Title</th>
-						            	<th>Year</th>
-						            </tr>
-						            <?php
-						                foreach($movies as $tuple)
-						                {
-						                    echo "<tr>";
-						                  	echo "<td>" . $tuple["title"] . "</td>";
-						              		echo "<td>" . $tuple["year"] . "</td>";
-						                    echo "</tr>";
-						                }
-						            ?>
-						        </table>
-						        <span class="col-xs-2"></span>
-						    </div>
-						    <?php
-        				}
-
-        				if (count($actors) > 0) {
-        					?>
-        					<h3>Actors</h3>
-	        				<div class="row">
-	        					<span class="col-xs-2"></span>
-						        <table class="col-xs-8 table table-condensed table-hover">
-						            <tr class="no-hover">
-						            	<th>Name</th>
-						            	<th>DOB</th>
-						            	<th>DOD</th>
-						            </tr>
-						            <?php
-						                foreach($actors as $tuple)
-						                {
-						                    echo "<tr>";
-						                  	echo "<td>" . $tuple["first"] . " " . $tuple ["last"] . "</td>";
-						              		echo "<td>" . $tuple["dob"] . "</td>";
-						              		echo "<td>" . (empty($tuple["dod"]) ? "N/A" : $tuple["dod"]) . "</td>";
-						                    echo "</tr>";
-						                }
-						            ?>
-						        </table>
-						        <span class="col-xs-2"></span>
-	        				</div>
-					        <?php
-        				}
-
-        				if (count($movies) == 0 && count($actors) == 0) {
-        					echo "<h4>Your search returned no results.</h4>";
-        				}
-	    			}
-	    		} 
-			}
-			?>
-		</div>
+						if (valid_phrase($title) && valid_year($year) && valid_phrase($company) && (empty($genres) || valid_genres($genres))) {
+							echo "u did it";
+						} else {
+							echo "wrong";
+						}
+					}
+ 				}
+ 			}
+		?>
 	</body>
 </html>
