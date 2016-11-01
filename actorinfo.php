@@ -39,23 +39,26 @@
             ?>
 
         <div class="container">
-            <h1>
+            
                 <?php 
                   
                     $sql = "SELECT * FROM Actor WHERE id=$q";
                     if ($result = $mysqli->query($sql)){
 
                         while($row = mysqli_fetch_array($result)) {
+                            ?><h1><span class="highlight">
+                            <?php
                             echo $row['first'] . " " . $row['last'];
                             ?>
-                            <li class="actor-info"> <?php echo $row['sex']; ?></li>
+                            </span></h1>
+                            <li class="actor-info sex"> <?php echo $row['sex']; ?></li>
                             <li class="actor-info"> Born: <?php echo $row['dob']; ?></li>
                             <li class="actor-info"> 
                                 <?php 
                                     if($row['dod'])
                                         echo "Died: " . $row['dod'];
                                     else
-                                        echo "He's still kickin"; 
+                                        echo "Alive"; 
                                 ?>
                             </li>
                             <?php
@@ -65,27 +68,35 @@
                     else{
                         echo "Problem with Query";
                     }
-                ?>
-            </h1>
-            
-                        <?php
                            
                             $getfilms="SELECT title,id FROM Movie WHERE id IN(SELECT mid FROM MovieActor WHERE aid=" . $q .")";
 
                             if ($result = $mysqli->query($getfilms)){
+                                    
                                 ?>
                                 <div class="row">
                                 <div class="col-md-12">
-                                <h2>Films</h2>
+                                <h2><span class="highlight">Films</span></h2>
                                     <ul>
                             <?php
+                                $row_count = 0; 
                                 while($row = mysqli_fetch_array($result)) {
+                                    $row_count = count($row);
                                     ?>
                      
                                     <li class="films">
                                         <a class="actors" href="movieinfo.php?q=<?php echo $row['id']; ?>"> <?php echo $row['title'];?></a>
                                     </li>
 
+                                    <?php
+                                }
+
+                                if ($row_count<=0){
+                                    
+                                    ?>
+                                    <li class="films">
+                                        <a class="nofilms"> No Films!</a>
+                                    </li>
                                     <?php
                                 }
                               }

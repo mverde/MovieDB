@@ -41,23 +41,49 @@ li.comments{
 	padding: 10px;
 }
 
-.actors{
-	font-size: 1.2em;
-	font-weight: bold;
-	color: #ffb1a1;
+.actors, a.nofilms{
+	font-size: 2em;
+    font-weight: bold;
+    color: #333333;
+}
+
+.nofilms:hover{
+	color: #333333;
+	text-decoration: none;
 }
 
 .actors:hover{
 	text-decoration: none;
-	color:#ffcbc0;
+	color:rgba(255, 202, 71, 0.5);;
 }
 
 .actor-info{
 	list-style-type: none;
-	font-size: .5em;
-	color: grey;
+    font-size: 2.8em;
+    font-weight: bold;
+    color: #333333;
 }
 
 li.films{
 	padding-bottom: 5px;
+}
+
+h2{
+	margin-bottom:20px !important;
+}
+h2 span.highlight{
+	padding-right: 50px;
+    border-bottom: 5px solid rgba(255, 214, 9, 0.6);
+	padding: 0px 10px 0px 0px;
+    font-size: 2.3em;
+}
+h1 span.highlight{
+	background: rgba(255, 202, 71, 0.5);
+	padding: 0px 10px 0px 0px;
+    font-size: 3em;
+}
+
+.sex{
+	color: rgba(255, 202, 71, 0.7);;
+    font-size: 3em;
 }

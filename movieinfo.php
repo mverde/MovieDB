@@ -38,7 +38,7 @@
 	         $q = $_GET['q'];
 	        ?>
         <div class="container">
-        	<h1>
+        	<h1><span class="highlight">
         		<?php 
         			$getTitle="SELECT title FROM Movie where id=$q"; 
         			if ($result = $mysqli->query($getTitle)){
@@ -52,10 +52,10 @@
 	                    echo "Problem with Query";
 	                }
         		?>
-        	</h1>
+        	</span></h1>
         	<div class="row">
         		<div class="col-md-6">
-        		<h2>Actors</h2>
+        		<h2><span class="highlight">Actors</span></h2>
         			<ul class="actor-in-movie">
         				<?php
         					
@@ -77,7 +77,7 @@
         		</div>
 
         		<div class="col-md-6">
-        		<h2>Comments</h2>
+        		<h2><span class="highlight">Comments</span></h2>
         			<ul>
         				<?php
         					$q = $_GET['q'];
@@ -113,7 +113,7 @@
         	</div>
         	<div class="row">
     			<div class="col-md-12">
-    				<h2> Add Comment </h2>
+    				<h2><span class="highlight"> Add Comment</span> </h2>
 
     				<form method="get" action="addcomment.php">
 					    <div class="form-group">
